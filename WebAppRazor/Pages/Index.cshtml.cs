@@ -28,12 +28,14 @@ namespace WebAppRazor.Pages
         public IList<CustomerProductsDTO> customerProducts { get; set; }
         public SelectList Products { get; set; }
         public SelectList Customers { get; set; }
+        public IDictionary<int, string> ProductImages { get; set; } = new Dictionary<int, string>();
 
         public void OnGet()
         {
             customerProducts = _appDbContext.customersProducts.ToList();
             Products = new SelectList(_appDbContext.products.ToList(), "Id", "Name");
             Customers = new SelectList(_appDbContext.customers.ToList(), "Id", "Name");
+            ProductImages = _appDbContext.products.ToDictionary(p => p.Id, p => string.IsNullOrEmpty(p.ImagePath) ? "placeholder.png" : p.ImagePath);
         }
 
         public IActionResult OnPost()
@@ -63,6 +65,8 @@ namespace WebAppRazor.Pages
 
             _appDbContext.customersProducts.Add(entry);
             _appDbContext.SaveChanges();
+
+            ProductImages = _appDbContext.products.ToDictionary(p => p.Id, p => string.IsNullOrEmpty(p.ImagePath) ? "placeholder.png" : p.ImagePath);
 
             return RedirectToPage();
         }
