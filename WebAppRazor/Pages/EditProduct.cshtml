@@ -1,0 +1,18 @@
+﻿
+@page
+@model WebAppRazor.Pages.EditProductModel
+
+<form method="post">
+    <div>
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" />
+    </div>
+    <div>
+        <label asp-for="Product.Price"></label>
+        <input asp-for="Product.Price" />
+    </div>
+    <input type="hidden" asp-for="RowVersionBase64" />
+    <button type="submit">Save</button>
+</form>
+
+<div asp-validation-summary="All"></div>

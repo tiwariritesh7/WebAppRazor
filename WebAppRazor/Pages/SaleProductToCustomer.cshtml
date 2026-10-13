@@ -1,0 +1,27 @@
+@page
+@model WebAppRazor.Pages.SaleProductToCustomerModel
+
+<h2>Sell Product to Customer</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="SelectedCustomerId">Customer</label>
+        <select asp-for="SelectedCustomerId" asp-items="Model.Customers"></select>
+    </div>
+    <div>
+        <label asp-for="SelectedProductId">Product</label>
+        <select asp-for="SelectedProductId" asp-items="Model.Products"></select>
+    </div>
+    <div>
+        <label asp-for="SalePrice">Sale Price</label>
+        <input asp-for="SalePrice" />
+    </div>
+    <div>
+        <button type="submit">Sell</button>
+    </div>
+</form>
+
+@if (Model.Message != null)
+{
+    <p>@Model.Message</p>
+}

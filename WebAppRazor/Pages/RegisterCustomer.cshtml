@@ -1,0 +1,31 @@
+@page
+@model WebAppRazor.Pages.RegisterCustomerModel
+
+<h2>Register Customer</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="Customer.Name">Name</label>
+        <input asp-for="Customer.Name" />
+    </div>
+    <div>
+        <label asp-for="Customer.Email">Email</label>
+        <input asp-for="Customer.Email" />
+    </div>
+    <div>
+        <label asp-for="Customer.Phone">Phone</label>
+        <input asp-for="Customer.Phone" />
+    </div>
+    <div>
+        <label asp-for="Customer.Address">Address</label>
+        <input asp-for="Customer.Address" />
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+</form>
+
+@if (Model.Message != null)
+{
+    <p>@Model.Message</p>
+}
