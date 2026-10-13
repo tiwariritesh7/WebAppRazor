@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebAppRazor.DTO
 {
@@ -8,15 +9,16 @@ namespace WebAppRazor.DTO
         [Required]
         public string Name { get; set; } = string.Empty;
 
-        // Allow decimal prices and require a value
+        // Price stored as integer in the database (matches current schema)
         [Required]
-        [Range(0, double.MaxValue)]
-        public decimal Price { get; set; }
+        [Range(0, int.MaxValue)]
+        public int Price { get; set; }
 
         public decimal PriceTotal { get; set; }
 
         public string Description { get; set; } = string.Empty;
 
+        [BindNever]
         [Timestamp]   // Marks this column as a concurrency token
         public byte[] RowVersion { get; set; }
     }

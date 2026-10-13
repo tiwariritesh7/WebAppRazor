@@ -27,6 +27,13 @@ namespace WebAppRazor.Pages
 
         public IActionResult OnPost()
         {
+            // Remove any RowVersion model state entries coming from form inputs to avoid false validation failures
+            var keysToRemove = ModelState.Keys.Where(k => k != null && k.Contains("RowVersion")).ToList();
+            foreach (var k in keysToRemove)
+            {
+                ModelState.Remove(k);
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();

@@ -1,10 +1,33 @@
 ﻿@page
-@model IndexModel
+@model WebAppRazor.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Customer Projects";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h2>Customer Project List</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.customerProducts)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.ProductName</td>
+            <td>@item.Price</td>
+            <td>@item.CreatedDate.ToString("g")</td>
+        </tr>
+    }
+    </tbody>
+    </table>
 </div>

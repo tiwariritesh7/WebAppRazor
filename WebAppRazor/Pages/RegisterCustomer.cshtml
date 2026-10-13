@@ -3,29 +3,43 @@
 
 <h2>Register Customer</h2>
 
-<form method="post">
-    <div>
-        <label asp-for="Customer.Name">Name</label>
-        <input asp-for="Customer.Name" />
+<form method="post" class="row g-3">
+    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Customer.Name" class="form-label">Name</label>
+        <input asp-for="Customer.Name" class="form-control" />
+        <span asp-validation-for="Customer.Name" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Customer.Email">Email</label>
-        <input asp-for="Customer.Email" />
+
+    <div class="col-md-6">
+        <label asp-for="Customer.Email" class="form-label">Email</label>
+        <input asp-for="Customer.Email" class="form-control" />
+        <span asp-validation-for="Customer.Email" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Customer.Phone">Phone</label>
-        <input asp-for="Customer.Phone" />
+
+    <div class="col-md-4">
+        <label asp-for="Customer.Phone" class="form-label">Phone</label>
+        <input asp-for="Customer.Phone" class="form-control" />
+        <span asp-validation-for="Customer.Phone" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Customer.Address">Address</label>
-        <input asp-for="Customer.Address" />
+
+    <div class="col-12">
+        <label asp-for="Customer.Address" class="form-label">Address</label>
+        <input asp-for="Customer.Address" class="form-control" />
+        <span asp-validation-for="Customer.Address" class="text-danger"></span>
     </div>
-    <div>
-        <button type="submit">Register</button>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Register</button>
     </div>
 </form>
 
 @if (Model.Message != null)
 {
-    <p>@Model.Message</p>
+    <div class="alert alert-success mt-3">@Model.Message</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

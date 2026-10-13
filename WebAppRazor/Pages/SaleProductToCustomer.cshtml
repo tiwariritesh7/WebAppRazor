@@ -3,25 +3,37 @@
 
 <h2>Sell Product to Customer</h2>
 
-<form method="post">
-    <div>
-        <label asp-for="SelectedCustomerId">Customer</label>
-        <select asp-for="SelectedCustomerId" asp-items="Model.Customers"></select>
+<form method="post" class="row g-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="SelectedCustomerId" class="form-label">Customer</label>
+        <select asp-for="SelectedCustomerId" asp-items="Model.Customers" class="form-select"></select>
+        <span asp-validation-for="SelectedCustomerId" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="SelectedProductId">Product</label>
-        <select asp-for="SelectedProductId" asp-items="Model.Products"></select>
+
+    <div class="col-md-6">
+        <label asp-for="SelectedProductId" class="form-label">Product</label>
+        <select asp-for="SelectedProductId" asp-items="Model.Products" class="form-select"></select>
+        <span asp-validation-for="SelectedProductId" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="SalePrice">Sale Price</label>
-        <input asp-for="SalePrice" />
+
+    <div class="col-md-4">
+        <label asp-for="SalePrice" class="form-label">Sale Price</label>
+        <input asp-for="SalePrice" class="form-control" />
+        <span asp-validation-for="SalePrice" class="text-danger"></span>
     </div>
-    <div>
-        <button type="submit">Sell</button>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Sell</button>
     </div>
 </form>
 
 @if (Model.Message != null)
 {
-    <p>@Model.Message</p>
+    <div class="alert alert-success mt-3">@Model.Message</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

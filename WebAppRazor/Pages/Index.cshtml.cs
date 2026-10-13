@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppRazor.DTO;
 using WebAppRazor.ORM;
 
@@ -6,6 +8,16 @@ namespace WebAppRazor.Pages
 {
     public class IndexModel : PageModel
     {
+        [BindProperty]
+        public CustomerProductsDTO CustomerProducts { get; set; }
+        [BindProperty]
+        public int SelectedCustomerId { get; set; }
+
+        [BindProperty]
+        public int SelectedProductId { get; set; }
+
+        [BindProperty]
+        public decimal Price { get; set; }
         private readonly AppDBContext _appDbContext;
 
         public IndexModel(AppDBContext appDbContext)
@@ -13,11 +25,46 @@ namespace WebAppRazor.Pages
             _appDbContext = appDbContext;
         }
 
-        public IList<ProductDTO> products { get; set; }
+        public IList<CustomerProductsDTO> customerProducts { get; set; }
+        public SelectList Products { get; set; }
+        public SelectList Customers { get; set; }
 
         public void OnGet()
         {
-            products = _appDbContext.products.ToList();
+            customerProducts = _appDbContext.customersProducts.ToList();
+            Products = new SelectList(_appDbContext.products.ToList(), "Id", "Name");
+            Customers = new SelectList(_appDbContext.customers.ToList(), "Id", "Name");
+        }
+
+        public IActionResult OnPost()
+        {
+            // re-populate selects
+            Products = new SelectList(_appDbContext.products.ToList(), "Id", "Name");
+            Customers = new SelectList(_appDbContext.customers.ToList(), "Id", "Name");
+
+            if (!ModelState.IsValid)
+            {
+                customerProducts = _appDbContext.customersProducts.ToList();
+                return Page();
+            }
+
+            var product = _appDbContext.products.FirstOrDefault(p => p.Id == SelectedProductId);
+            var customer = _appDbContext.customers.FirstOrDefault(c => c.Id == SelectedCustomerId);
+
+            var entry = new CustomerProductsDTO
+            {
+                ProductId = SelectedProductId,
+                ProductName = product?.Name ?? string.Empty,
+                Price = Price != 0 ? Price : (product != null ? Convert.ToDecimal(product.Price) : 0m),
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                Name = customer?.Name ?? string.Empty
+            };
+
+            _appDbContext.customersProducts.Add(entry);
+            _appDbContext.SaveChanges();
+
+            return RedirectToPage();
         }
     }
 }
