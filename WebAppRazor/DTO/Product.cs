@@ -16,6 +16,9 @@ namespace WebAppRazor.DTO
 
         public decimal PriceTotal { get; set; }
 
+        // Optional image filename stored under wwwroot/images/products
+        public string? ImagePath { get; set; }
+
         public string Description { get; set; } = string.Empty;
 
         [BindNever]
